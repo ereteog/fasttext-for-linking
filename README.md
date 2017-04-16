@@ -39,6 +39,20 @@ optional arguments:
   --version             show program's version number and exit
 ```
 
+# Docker
+
+Compile the English image:
+
+```
+docker build -t jplu/fasttext-en -f en/Dockerfile .
+```
+
+Run a container from the English image:
+
+```
+docker run -d -p 5000:5000 --name fasttest-english jplu/fasttext-en
+```
+
 # Opening an issue
 
 If you find a bug, have trouble following the documentation or have a question about the project you can create an issue. Whatever issue you’re having, you’re likely not the only one, so others will find your issue helpful, too. To open an issue:
