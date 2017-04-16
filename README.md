@@ -25,7 +25,7 @@ pip install gensim fasttext flask spacy
 # Usage
 
 ```
-usage: fasttext_app [-h] -l LANGUAGE -m MODEL [-p PORT] [--version]
+usage: fasttext_app [-h] -l LANGUAGE -m MODEL -p PORT [--version]
 
 Webapp for entity linking using fastText in a given language
 
