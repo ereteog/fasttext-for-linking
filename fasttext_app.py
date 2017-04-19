@@ -5,6 +5,7 @@ import flask
 import spacy
 import argparse
 import os
+import operator
 
 
 app = flask.Flask(__name__)
@@ -37,8 +38,8 @@ def fasttext_sim():
 		v1 = [model[word] for word in clean_entity]
 		v2 = [model[word] for word in clean_text]
 		scores[entity] = numpy.dot(gensim.matutils.unitvec(numpy.array(v1).mean(axis=0)), gensim.matutils.unitvec(numpy.array(v2).mean(axis=0)))
-    
-	return flask.jsonify({flask.request.json['mention']: scores}), 200
+    	sorted_scores = sorted(scores.items(), key=operator.itemgetter(1))
+	return flask.jsonify({sorted_scores}), 200
 
 def main():
 	parser = argparse.ArgumentParser(description="Webapp for entity linking using fastText in a given language", prog="fasttext_app")
