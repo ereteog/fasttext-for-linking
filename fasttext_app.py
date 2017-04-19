@@ -39,7 +39,7 @@ def fasttext_sim():
 		v1 = [model[word] for word in clean_entity]
 		v2 = [model[word] for word in clean_text]
 		scores[entity] = numpy.dot(gensim.matutils.unitvec(numpy.array(v1).mean(axis=0)), gensim.matutils.unitvec(numpy.array(v2).mean(axis=0)))
-    	sorted_scores = collections.OrderedDict(sorted(scores.items(), key=operator.itemgetter(1)))
+    	sorted_scores = collections.OrderedDict(sorted(scores.items(), key=operator.itemgetter(1), reverse=True))
 	return flask.jsonify(sorted_scores), 200
 
 def main():
@@ -52,7 +52,7 @@ def main():
 	args = parser.parse_args()
 
 	init(args)
-
+	app.config["JSON_SORT_KEYS"] = False
 	app.run(host='0.0.0.0', port=args.port)
 
 if __name__ == '__main__':
