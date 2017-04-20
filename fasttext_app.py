@@ -37,7 +37,10 @@ def fasttext_sim():
 		clean_entity = [token.orth_ for token in nlp(entity) if not (token.is_punct or token.is_stop or token.is_space)]
 		v1 = [model[word] for word in clean_entity]
 		v2 = [model[word] for word in clean_text]
-		scores[entity] = numpy.dot(gensim.matutils.unitvec(numpy.array(v1).mean(axis=0)), gensim.matutils.unitvec(numpy.array(v2).mean(axis=0)))
+		if v1 and v2:
+			scores[entity] = numpy.dot(gensim.matutils.unitvec(numpy.array(v1).mean(axis=0)), gensim.matutils.unitvec(numpy.array(v2).mean(axis=0)))
+		else:
+			scores[entity] = 0.0
     	sorted_scores = collections.OrderedDict(sorted(scores.items(), key=operator.itemgetter(1), reverse=True))
 	return flask.jsonify(sorted_scores), 200
 
