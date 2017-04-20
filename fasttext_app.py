@@ -10,7 +10,6 @@ import collections
 
 
 app = flask.Flask(__name__)
-scores = {}
 
 
 def file_exists(x):
@@ -31,7 +30,7 @@ def init(args):
 def fasttext_sim():
 	if not flask.request.json or not 'entities' in flask.request.json or not 'text' in flask.request.json or not 'mention' in flask.request.json:
 		flask.abort(400)
-
+	scores = {}
 	clean_text = [token.orth_ for token in nlp(flask.request.json['text']) if not (token.is_punct or token.is_stop or token.is_space or token.orth_ == flask.request.json['mention'])]
 
 	for entity in flask.request.json['entities']:
