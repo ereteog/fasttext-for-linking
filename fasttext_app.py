@@ -35,8 +35,8 @@ def fasttext_sim():
 
 	for entity in flask.request.json['entities']:
 		clean_entity = [token.orth_ for token in nlp(entity) if not (token.is_punct or token.is_stop or token.is_space)]
-		v1 = [model[word] for word in clean_entity]
-		v2 = [model[word] for word in clean_text]
+		v1 = model["_".join(clean_entity).lower()]
+		v2 = [model[word.lower()] for word in clean_text]
 		if v1 and v2:
 			scores[entity] = numpy.dot(gensim.matutils.unitvec(numpy.array(v1).mean(axis=0)), gensim.matutils.unitvec(numpy.array(v2).mean(axis=0)))
 		else:
